@@ -47,7 +47,9 @@ function App() {
       headers:{
         "Content-Type": "application/json",
       },
-    })
+    });
+
+    setTodos((prevState)=>[...prevState, todo])
 
     setTitle("");
     setTime("");
