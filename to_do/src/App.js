@@ -1,7 +1,7 @@
 import "./App.css";
 
 import {BsTrash, BsBookMarkCheck, BsBookmarkCheckFill} from "react-icons/bs"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const API = "http://localhost:5000";
 
@@ -10,6 +10,26 @@ function App() {
   const [time, setTime] = useState("")
   const [todos, setTodos] = useState([])
   const [loading, setLoading] = useState(false)
+
+  //Load todos on page load
+  useEffect(()=>{
+    
+    const loadData = async() => { 
+      
+      setLoading(true)
+
+      const res = await fetch(API + "/todos")
+        .then((res)=> res.json())
+        .then((data)=> data)
+        .catch((err)=> console.log(err));
+      
+      setLoading(false)
+
+      setTodos(res)
+    };
+
+    loadData()
+  },[])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -69,6 +89,11 @@ function App() {
       <div className="list-todo">
         <h2>Lista de tarefas:</h2>
         {todos.length === 0 && <p>Não há tarefas</p>}
+        {todos.map((todo)=>(
+          <div className="todo" key={todo.id}>
+            <p>{todo.title}</p>
+          </div>
+        ))}
       </div>
     </div>
   );
