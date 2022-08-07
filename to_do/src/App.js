@@ -20,7 +20,8 @@ function App() {
         <p>Formulario</p>
       </div>
       <div className="list-todo">
-        <p>Listas</p>
+        <h2>Lista de tarefas:</h2>
+        {todos.length === 0 && <p>Não há tarefas</p>}
       </div>
     </div>
   );
