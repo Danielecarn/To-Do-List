@@ -1,6 +1,6 @@
 import "./App.css";
 
-import {BsTrash, BsBookMarkCheck, BsBookmarkCheckFill} from "react-icons/bs"
+import {BsTrash, BsBookmarkCheck, BsBookmarkCheckFill} from "react-icons/bs"
 import { useEffect, useState } from "react";
 
 const API = "http://localhost:5000";
@@ -53,6 +53,10 @@ function App() {
 
     setTitle("");
     setTime("");
+  };
+
+  if(loading){
+    return <p>Carregando...</p>
   }
 
   return (
@@ -93,7 +97,14 @@ function App() {
         {todos.length === 0 && <p>Não há tarefas</p>}
         {todos.map((todo)=>(
           <div className="todo" key={todo.id}>
-            <p>{todo.title}</p>
+            <h3 className={todo.done ? "todo-done" : ""}>{todo.title}</h3>
+            <p>Duração: {todo.time}</p>
+            <div className="actions">
+              <span>
+                {!todo.done ? <BsBookmarkCheck/> : <BsBookmarkCheckFill/>}
+              </span>
+              <BsTrash/>
+            </div>
           </div>
         ))}
       </div>
